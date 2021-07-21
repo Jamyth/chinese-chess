@@ -1,0 +1,33 @@
+{
+    "name": "chinese-chess",
+    "version": "1.0.0",
+    "main": "dist/index.js",
+    "license": "MIT",
+    "scripts": {
+        "run-script": "ts-node --project config/tsconfig.script.json",
+        "format": "yarn run-script script/format.ts",
+        "lint": "yarn run-script script/lint.ts",
+        "build": "yarn run-script script/build.ts",
+        "module": "coil-react",
+        "start": "yarn run-script script/start.ts"
+    },
+    "files": [
+        "dist/**"
+    ],
+    "dependencies": {
+        "coil-react": "1.0.4",
+        "jamyth-web-util": "1.0.4"
+    },
+    "devDependencies": {
+        "@iamyth/logger": "1.0.4",
+        "@iamyth/prettier-config": "0.0.1",
+        "@iamyth/webpack-runner": "1.1.0",
+        "@types/node": "16.4.0",
+        "coil-react-cli": "1.0.1",
+        "eslint": "7.31.0",
+        "eslint-config-iamyth": "0.0.7",
+        "prettier": "2.3.2",
+        "ts-node": "10.1.0",
+        "typescript": "4.3.5"
+    }
+}
