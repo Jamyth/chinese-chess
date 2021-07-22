@@ -1,0 +1,29 @@
+.g-game-container {
+    > .row {
+        display: flex;
+
+        .chess {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #eee;
+            border-radius: 50%;
+            padding: 2px;
+            border: 1px solid;
+            user-select: none;
+            cursor: pointer;
+
+            &.RED {
+                color: red;
+            }
+
+            &.selected {
+                background-color: blue;
+            }
+        }
+
+        .highlighted {
+            background-color: rgba(#eee, 0.5);
+        }
+    }
+}
