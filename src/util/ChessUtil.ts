@@ -131,22 +131,31 @@ function getAvailableMove(chess: Chess, coordinate: string, board: (Chess | null
         isTopMost: y === 0,
         isBottomMost: y === 9,
     };
+    let moves: string[] = [];
     switch (chess.piece) {
         case ChessPiece.SOLDIER:
-            return getSoldierAvailableMoves(isRed, x, y, moveConfig).filter(filterOwnSideChess(isRed, board));
+            moves = getSoldierAvailableMoves(isRed, x, y, moveConfig);
+            break;
         case ChessPiece.BISHOP:
-            return getBishopAvailableMoves(isRed, x, y).filter(filterOwnSideChess(isRed, board));
+            moves = getBishopAvailableMoves(isRed, x, y);
+            break;
         case ChessPiece.MINISTER:
-            return getMinisterAvailableMoves(isRed, x, y).filter(filterOwnSideChess(isRed, board));
+            moves = getMinisterAvailableMoves(isRed, x, y);
+            break;
         case ChessPiece.TESLA:
-            return getTeslaAvailableMoves(chess.side, x, y, board).filter(filterOwnSideChess(isRed, board));
+            moves = getTeslaAvailableMoves(chess.side, x, y, board);
+            break;
         case ChessPiece.CANNON:
-            return getCannonAvailableMoves(chess.side, x, y, board).filter(filterOwnSideChess(isRed, board));
+            moves = getCannonAvailableMoves(chess.side, x, y, board);
+            break;
         case ChessPiece.GENERAL:
-            return getGeneralAvailableMoves(isRed, x, y, board).filter(filterOwnSideChess(isRed, board));
+            moves = getGeneralAvailableMoves(isRed, x, y, board);
+            break;
         case ChessPiece.KNIGHT:
-            return getKnightAvailableMoves(x, y, board).filter(filterOwnSideChess(isRed, board));
+            moves = getKnightAvailableMoves(x, y, board);
+            break;
     }
+    return moves.filter(filterOwnSideChess(isRed, board));
 }
 
 function booleanFilter<T extends string>(target: string | false): target is T {
