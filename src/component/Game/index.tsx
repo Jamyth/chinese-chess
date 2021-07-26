@@ -2,6 +2,7 @@ import React from 'react';
 import { ChessUtil } from 'util/ChessUtil';
 import type { Chess } from 'type/Chess';
 import { CoordUtil } from 'util/CoordUtil';
+import { Marker } from 'component/Marker';
 import './index.less';
 
 interface Props {
@@ -21,7 +22,13 @@ export const Game = React.memo(({ game, size, selectedChess, onSelect, onMove }:
     const chessStyle: React.CSSProperties = {
         minWidth: size + 'px',
         height: size + 'px',
-        fontSize: size * 0.5 + 'px',
+        lineHeight: size + 'px',
+    };
+    const innerChessStyle: React.CSSProperties = {
+        minWidth: size - 9 + 'px',
+        height: size - 9 + 'px',
+        fontSize: size * 0.55 + 'px',
+        lineHeight: size - 9 + 'px',
     };
 
     const chess = selectedChess ? ChessUtil.getChess(selectedChess, game) : null;
@@ -57,14 +64,28 @@ export const Game = React.memo(({ game, size, selectedChess, onSelect, onMove }:
                             const isSelected = CoordUtil.toString(x, y) === selectedChess;
                             const isHighlighted = availableMoves.includes(CoordUtil.toString(x, y));
                             return (
-                                <div
-                                    className={`${
-                                        chess ? `chess ${chess.side} ${isSelected ? 'selected' : ''}` : 'empty'
-                                    } ${isHighlighted ? 'highlighted' : ''}`}
-                                    key={`${x + 1}`}
-                                    style={chessStyle}
-                                >
-                                    {chess ? ChessUtil.translate(chess.piece, chess.side) : null}
+                                <div className="container" style={chessStyle} key={`${x + 1}`}>
+                                    {isSelected && (
+                                        <div className="marker-container" style={chessStyle}>
+                                            <Marker size={size} />
+                                        </div>
+                                    )}
+                                    <div
+                                        className={`${
+                                            chess
+                                                ? `chess ${isHighlighted ? 'eatable' : ''} ${chess.side} ${
+                                                      isSelected ? 'selected' : ''
+                                                  }`
+                                                : 'empty'
+                                        }`}
+                                        style={chessStyle}
+                                    >
+                                        {chess ? (
+                                            <div style={innerChessStyle}>
+                                                {ChessUtil.translate(chess.piece, chess.side)}
+                                            </div>
+                                        ) : null}
+                                    </div>
                                 </div>
                             );
                         })}

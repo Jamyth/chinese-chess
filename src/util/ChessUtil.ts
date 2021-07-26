@@ -69,21 +69,22 @@ function init(): (Chess | null)[][] {
 }
 
 function translate(piece: ChessPiece, side: Side): string {
+    const isBlack = side === Side.BLACK;
     switch (piece) {
         case ChessPiece.GENERAL:
-            return side === Side.BLACK ? '將' : '帥';
+            return isBlack ? '將' : '帥';
         case ChessPiece.MINISTER:
-            return '士';
+            return isBlack ? '士' : '仕';
         case ChessPiece.BISHOP:
-            return side === Side.BLACK ? '象' : '相';
+            return isBlack ? '象' : '相';
         case ChessPiece.KNIGHT:
-            return '馬';
+            return isBlack ? '馬' : '傌';
         case ChessPiece.TESLA:
-            return '車';
+            return isBlack ? '車' : '俥';
         case ChessPiece.CANNON:
-            return '砲';
+            return isBlack ? '砲' : '炮';
         case ChessPiece.SOLDIER:
-            return side === Side.BLACK ? '卒' : '兵';
+            return isBlack ? '卒' : '兵';
     }
 }
 

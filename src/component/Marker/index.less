@@ -1,0 +1,36 @@
+.g-marker {
+    position: relative;
+    @size: 0;
+
+    > .container {
+        position: absolute;
+        width: 20%;
+        height: 20%;
+        border: 3px solid black;
+    }
+
+    .top-left {
+        top: @size;
+        left: @size;
+        border-right: none;
+        border-bottom: none;
+    }
+    .top-right {
+        right: @size;
+        top: @size;
+        border-left: none;
+        border-bottom: none;
+    }
+    .bottom-left {
+        bottom: @size;
+        left: @size;
+        border-top: none;
+        border-right: none;
+    }
+    .bottom-right {
+        bottom: @size;
+        right: @size;
+        border-left: none;
+        border-top: none;
+    }
+}
