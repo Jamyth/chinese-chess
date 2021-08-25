@@ -59,12 +59,12 @@ export const Game = React.memo(({ game, size, selectedChess, onSelect, onMove }:
         <div className="g-game-container" style={boardStyle} onClick={onBoardClick}>
             {game.map((row, y) => {
                 return (
-                    <div className="row" key={`${y + 1}`}>
+                    <div className="row" key={`y-${y + 1}`}>
                         {row.map((chess, x) => {
                             const isSelected = CoordUtil.toString(x, y) === selectedChess;
                             const isHighlighted = availableMoves.includes(CoordUtil.toString(x, y));
                             return (
-                                <div className="container" style={chessStyle} key={`${x + 1}`}>
+                                <div className="container" style={chessStyle} key={`x-${x + 1}`}>
                                     {isSelected && (
                                         <div className="marker-container" style={chessStyle}>
                                             <Marker size={size} />

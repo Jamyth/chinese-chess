@@ -1,5 +1,5 @@
 import { ChessPiece, Side } from 'type/Chess';
-import type { Chess, Game } from 'type/Chess';
+import type { Chess, Game, StepHistory } from 'type/Chess';
 import { CoordUtil } from 'util/CoordUtil';
 
 interface MoveConfig {
@@ -88,12 +88,39 @@ function translate(piece: ChessPiece, side: Side): string {
     }
 }
 
+function getGameByHistory(history: StepHistory[]) {
+    const game: Game = {
+        turn: Side.RED,
+        board: init(),
+        redEaten: [],
+        blackEaten: [],
+    };
+
+    history.forEach(({ from, to }) => {
+        const fromCoord = CoordUtil.toString(from.x, from.y);
+        const toCoord = CoordUtil.toString(to.x, to.y);
+        console.info(fromCoord);
+        console.info(toCoord);
+        move(fromCoord, toCoord, game);
+    });
+
+    return game;
+}
+
+function goBack(history: StepHistory[]) {
+    if (!history.length) {
+        return getGameByHistory([]);
+    }
+    history.pop();
+    return getGameByHistory(history);
+}
+
 function getChess(selectedChess: string, board: (Chess | null)[][]) {
     const [x, y] = CoordUtil.toCoord(selectedChess);
     return board[y][x];
 }
 
-function move(selectedCoord: string, targetCoord: string, game: Game) {
+function move(selectedCoord: string, targetCoord: string, game: Game): StepHistory | undefined {
     const { turn, board, redEaten, blackEaten } = game;
     const [selectedX, selectedY] = CoordUtil.toCoord(selectedCoord);
     const [targetX, targetY] = CoordUtil.toCoord(targetCoord);
@@ -121,6 +148,17 @@ function move(selectedCoord: string, targetCoord: string, game: Game) {
         }
     }
     game.turn = turn === Side.BLACK ? Side.RED : Side.BLACK;
+    return {
+        chess: selected,
+        from: {
+            x: selectedX,
+            y: selectedY,
+        },
+        to: {
+            x: targetX,
+            y: targetY,
+        },
+    };
 }
 
 function getAvailableMove(chess: Chess, coordinate: string, board: (Chess | null)[][]): string[] {
@@ -386,4 +424,4 @@ function getClosestChess(
     };
 }
 
-export const ChessUtil = Object.freeze({ init, translate, move, getChess, getAvailableMove });
+export const ChessUtil = Object.freeze({ init, translate, move, getChess, getAvailableMove, goBack, getGameByHistory });

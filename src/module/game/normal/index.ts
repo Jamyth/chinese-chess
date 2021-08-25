@@ -10,6 +10,7 @@ import { CoordUtil } from 'util/CoordUtil';
 const initialState: State = {
     game: null,
     selectedChess: null,
+    stepHistory: [],
 };
 
 export const GameNormalState = Recoil.atom({
@@ -55,8 +56,19 @@ export const useGameNormalAction = () => {
             if (!state.game) {
                 return;
             }
-            ChessUtil.move(selectedChess, CoordUtil.toString(x, y), state.game);
+            const movedChess = ChessUtil.move(selectedChess, CoordUtil.toString(x, y), state.game);
+            movedChess && state.stepHistory.push(movedChess);
             state.selectedChess = null;
+        });
+    };
+
+    const onGoBack = () => {
+        setState((state) => {
+            if (!state.game) {
+                return;
+            }
+            const game = ChessUtil.goBack(state.stepHistory);
+            state.game = game;
         });
     };
 
@@ -64,6 +76,7 @@ export const useGameNormalAction = () => {
         onMount,
         onChessSelect,
         onMove,
+        onGoBack,
     };
 };
 

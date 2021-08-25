@@ -12,8 +12,11 @@ export const Main = React.memo(() => {
     }
     const game = useGameNormalState((state) => state.game);
     const selectedChess = useGameNormalState((state) => state.selectedChess);
-    const { onChessSelect, onMove } = useGameNormalAction();
-
+    const { onChessSelect, onMove, onGoBack } = useGameNormalAction();
+    // const boardStyle: React.CSSProperties = {
+    //     width: height * 9 + 'px',
+    //     height: height * 10 + 'px',
+    // };
     return (
         <div className="g-game-normal">
             <Board size={height} />
@@ -24,6 +27,9 @@ export const Main = React.memo(() => {
                 onMove={onMove}
                 onSelect={onChessSelect}
             />
+            <button type="button" onClick={onGoBack}>
+                Go Back
+            </button>
         </div>
     );
 });

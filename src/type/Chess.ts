@@ -18,6 +18,17 @@ export interface Chess {
     piece: ChessPiece;
 }
 
+interface Coordinate {
+    x: number;
+    y: number;
+}
+
+export interface StepHistory {
+    chess: Chess;
+    from: Coordinate;
+    to: Coordinate;
+}
+
 export interface Game {
     turn: Side;
     board: (Chess | null)[][];
