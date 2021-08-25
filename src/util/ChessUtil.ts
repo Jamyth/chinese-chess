@@ -99,8 +99,6 @@ function getGameByHistory(history: StepHistory[]) {
     history.forEach(({ from, to }) => {
         const fromCoord = CoordUtil.toString(from.x, from.y);
         const toCoord = CoordUtil.toString(to.x, to.y);
-        console.info(fromCoord);
-        console.info(toCoord);
         move(fromCoord, toCoord, game);
     });
 
